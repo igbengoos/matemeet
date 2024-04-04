@@ -1,0 +1,154 @@
+/**
+
+**/
+
+/****** BASIC SETUP ******/
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* body {
+    padding: 0 0.3rem;
+}  */
+
+/****** HEADER COMPONENT ******/
+
+.hero-main {
+    height: 90vh;
+    position: relative;
+    padding: 15rem 0;
+    overflow: hidden;
+}
+
+@media only screen and (max-width: 56.25em) {
+    .hero-main {
+      padding: 10rem 0; } 
+    }
+
+/**** BACKGROUND VIDEO ****/
+.bg-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: -1;
+    opacity: .15;
+    overflow: hidden; 
+}
+
+.bg-video__content {
+    height: 100%;
+    width: 100%;
+    -o-object-fit: cover;
+    object-fit: cover;
+}
+
+
+/****** REUSABLE COMPONENT ******/
+
+/*** Profile Detail ****/
+.profile__dn {
+    text-decoration: none;
+}
+
+/****** POST SECTION ******/
+
+.post-text {
+    padding-top: 0.5rem;
+}
+
+.post-img {
+    float: left;
+    margin-right: 0.3rem;
+}
+
+.edit-post,
+.edit-name {
+    color: #31D2F2;   
+}
+
+
+/****** BUTTONS *****/
+.btn-hidden {
+    background-color: transparent; 
+    box-shadow:none; 
+    border:none;
+    padding: 5px;
+}
+
+.ms-n2 {
+    margin-left: -0.6rem;
+  }
+  
+.btn-cusom {
+    color: #0083B0;
+  }
+
+/****** ICONS ******/
+.icon__color {
+    color: #31D2F2;
+}
+
+.icon__icon {
+
+}
+
+/* NOTIFICATION BAR */
+.notification-badge {
+    transition: 0.3s;
+}
+
+.notification-badge:hover {
+    cursor: pointer;
+    opacity: 0.75;
+    transition: 0.3s;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 17rem;
+    box-shadow: 0px 8px 8px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    font-size: 0.9rem;
+}
+
+.dropdown-content a {
+    color: #000;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #ddd;
+}
+
+.dropdown-item-parent {
+    position: relative;
+    display: block;
+}
+
+.dropdown-item-close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: 1.8rem;
+    padding-right: 5px;
+    transition: 0.3;
+}
+
+.dropdown-item-close:hover {
+    background-color: rgb(180, 25, 25);
+    transition: 0.3s;
+    cursor: pointer;
+}

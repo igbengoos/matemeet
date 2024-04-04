@@ -1,0 +1,35 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- MAIN STYLE -->
+    <link rel="stylesheet" href="{% static 'assets/css/style.css' %}" type="text/css" />
+    <link rel="stylesheet" href="{% static 'assets/css/normalize.css' %}" type="text/css" />
+    <!-- VENDOR STYLE  -->
+    <link rel="stylesheet" href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" type="text/css" />
+    <!-- ICONS-->
+    <link rel="stylesheet" href="{% static 'vendor/bootstrap/fonts/bootstrap-icons.min.css' %}" type="text/css" />
+    <!-- MAIN JAVASCRIPT -->
+    <title>
+      {% block title %}Home{% endblock %} | MateMeet
+    </title>
+  </head>
+  <body>
+    {% include 'landing/navbar.html' %}
+    
+    {% block content %} 
+    {% endblock content %}
+
+    <!-- EXTERNAL JAVASCRIPT -->
+    <script
+      src="{% static 'vendor/bootstrap/js/popper.min.js' %}"
+      integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+      crossorigin="anonymous"
+    ></script>
+    <script src="{% static 'vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+  </body>
+</html>

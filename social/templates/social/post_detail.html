@@ -1,0 +1,142 @@
+{% extends 'landing/base.html' %}
+{% load static %}
+
+<title>
+    {% block title %}Post Detail{% endblock %} | MateMeet
+</title>
+
+
+{% load crispy_forms_tags %} 
+
+{% block content %}
+    <div class="container">
+        <div class="row mt-3">
+            <div class="col-md-5 col-sm-6 mb-4">
+            <a href="{% url 'post-list' %}" class="btn btn-light">Back To Feed</a>
+            </div>
+        </div>
+
+        <div class="row justify-content-center mt-3">
+            <div class="col-md-5 col-sm-12 border-bottom">
+                <div>
+                    <a href="{% url 'profile' post.author.profile.pk %}">
+                        <img class="rounded-circle post-img" height="30" width="30" src="{{ post.author.profile.picture.url }}" alt="">
+                    </a>
+                    <p class="post-text">
+                        <a class="profile__dn" href="{% url 'profile' post.author.profile.pk %}">{{ post.author.profile.name }}</a> {{ post.created_on }}
+                        {% if request.user == post.author %}
+                            <a href="{%  url 'edit-post' post.pk %}" class="edit-post"><ion-icon name="create-outline"></ion-icon></a>
+                            <a href="{%  url 'delete-post' post.pk %}" class="edit-post"><ion-icon name="trash-outline"></ion-icon></a>
+                        {% endif %}
+                    </p>
+                </div>
+                <p>{{ post.body }}</p>
+                <div class="d-flex flex-row">
+                    <form method="POST" action="{% url 'like' post.pk %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="next" value="{{ request.path }}">
+                        <button class="btn-hidden" type="submit">
+                            <ion-icon name="thumbs-up-outline"></ion-icon>
+                            <span>{{ post.likes.all.count }}</span>
+                        </button>
+                    </form>
+
+                    <form method="POST" action="{% url 'dislike' post.pk %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="next" value="{{ request.path }}">
+                        <button class="btn-hidden" type="submit">
+                            <ion-icon name="thumbs-down-outline"></ion-icon>
+                            <span>{{ post.dislikes.all.count }}</span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center mt-3 mb-5">
+            <div class="col-md-5 col-sm-12">
+                <form method="POST">
+                    {% csrf_token %}
+                    <p>{{ form | crispy }}</p>
+                    <div class="d-grid gap-2 col-3">
+                    <button class="btn btn-info my-3">Submit!</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        {% for comment in comments %}
+        {% if comment.is_parent %}
+        <div class="row justify-content-center mt-3">
+            <div class="col-md-5 col-sm-12 border-bottom">
+                <div>
+                    <a href="{% url 'profile' comment.author.profile.pk %}">
+                        <img class="rounded-circle post-img" height="30" width="30" src="{{ comment.author.profile.picture.url }}" alt="">
+                    </a>
+                    <p class="post-text">
+                        <a class="profile__dn" href="{% url 'profile' comment.author.profile.pk %}">{{ comment.author.profile.name }}</a> {{ comment.created_on }}
+                    {% if request.user == comment.author %}
+                        <a href="{%  url 'delete-comment' post.pk comment.pk %}" class="edit-post"><ion-icon name="trash-outline"></ion-icon></a>
+                    {% endif %}
+                    </p>
+                </div>
+                <p>{{ comment.comment }}</p>
+                <div class="d-flex flex-row">
+                    <form method="POST" action="{% url 'comment-like' post.pk comment.pk %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="next" value="{{ request.path }}">
+                        <button class="btn-hidden" type="submit">
+                            <ion-icon name="thumbs-up-outline"></ion-icon>
+                            <span>{{ comment.likes.all.count }}</span>
+                        </button>
+                    </form>
+
+                    <form method="POST" action="{% url 'comment-dislike' post.pk comment.pk %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="next" value="{{ request.path }}">
+                        <button class="btn-hidden mb-3" type="submit">
+                            <ion-icon name="thumbs-down-outline"></ion-icon>
+                            <span>{{ comment.dislikes.all.count }}</span>
+                        </button>
+                    </form>
+                    <div>
+                        <button class="btn-hidden" type="submit" onclick="CommentReplyToggle('{{ comment.pk }}')">
+                            <ion-icon name="chatbubble-ellipses-outline"></ion-icon>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center mt-3 mb-5 d-none" id="{{ comment.pk }}">
+            <div class="col-md-5 col-sm-12" id="">
+                <form method="POST" action="{% url 'comment-reply' post.pk comment.pk %}">
+                    {% csrf_token %}
+                    <p>{{ form | crispy }}</p>
+                    <div class="d-grid gap-2 col-3">
+                    <button class="btn btn-info my-3">Submit!</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        {% for child_comment in comment.children %}
+        <div class="row justify-content-center mt-3 mb-5">
+            <div class="col-md-5 col-sm-12 border-bottom">
+                <div class="ms-5">
+                    <a href="{% url 'profile' child_comment.author.profile.pk %}">
+                        <img class="rounded-circle post-img" height="30" width="30" src="{{ child_comment.author.profile.picture.url }}" alt="">
+                    </a>
+                    <p class="post-text">
+                        <a class="profile__dn" href="{% url 'profile' child_comment.author.profile.pk %}">{{ child_comment.author.profile.name }}</a> {{ child_comment.created_on }}
+                    {% if request.user == child_comment.author %}
+                        <a href="{%  url 'delete-comment' post.pk child_comment.pk %}" class="edit-post"><ion-icon name="trash-outline"></ion-icon></a>
+                    {% endif %}
+                    </p>
+                    <p>{{ child_comment.comment }}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% endfor %}
+    </div>
+
+<script type="text/javascript" src="{% static 'assets/js/main.js' %}"></script>
+{% endblock content %}

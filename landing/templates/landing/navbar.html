@@ -1,0 +1,60 @@
+{% load custom_tags %}
+{% load static %}
+
+<div>
+  <nav class="navbar navbar-expand-lg bg-body-tertiary px-5">
+    <div class="container-fluid">
+      <a class="navbar-brand"
+        {% if user.is_authenticated %}
+          href="{% url 'post-list' %}"
+        {% else %}
+          href="{% url 'index' %}"
+        {% endif %}>
+        <img height="40" width="40" src="{% static 'assets/img/img-home__design.png' %}" alt=""></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      {% if user.is_authenticated %}
+        <form class="d-flex ps-2" method="GET" action="{% url 'search-user' %}">
+          <div class="input-group">
+            <span class="input-group-text " id="basic-addon1">@</span>
+            <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" name="query" value="{{ request.GET.query }}"/>
+            <button class="btn-hidden"  type="submit"><ion-icon class="px-2 icon__color"  name="search-outline"></ion-icon></button>
+          </div>
+        </form>
+      {% else %}
+        <form class="d-none" method="GET" action="{% url 'search-user' %}">
+          <div class="input-group">
+            <span class="input-group-text " id="basic-addon1">@</span>
+            <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" name="query" value="{{ request.GET.query }}"/>
+            <button class="btn-hidden"  type="submit"><ion-icon class="px-2 icon__color"  name="search-outline"></ion-icon></button>
+          </div>
+        </form>
+      {% endif %}
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2"></ul>
+        {% if user.is_authenticated %}
+        <a href="" class="profile__dn"><ion-icon name="notifications-outline"></ion-icon></a>
+          <div class="nav-item dropdown px-3" style="cursor: pointer;">
+            <a class="nav-link dropdown-toggle text-dark" data-bs-toggle="dropdown" role="botton" aria-expanded="false">
+              {% if request.user == user %}
+                <img src="{{ user.profile.picture.url }}" class="rounded-circle" width="30" height="30">
+              {% endif %}
+            </a>
+            <ul class="dropdown-menu">
+              <li>
+                <a class="dropdown-item" href="{% url 'profile' request.user.profile.pk %}">Profile</a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="{% url 'account_logout' %}">Sign Out</a>
+              </li>
+            </ul>
+          </div>
+          <div class="nav-item">
+            {% show_notifications %}
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </nav>
+</div>

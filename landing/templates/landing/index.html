@@ -1,0 +1,29 @@
+{% extends "landing/base.html" %} 
+{% load static %}
+
+{% block content %}
+<div class=" hero-main">
+  <div class="bg-video">
+    <video class="bg-video__content" autoplay muted loop>
+        <source src="{% static 'assets\img\bg_vidoe_design.mp4' %}" type="video/mp4">
+        <source src="{% static 'assets\img\bg_vidoe_design.webm' %}" type="video/webm">
+        Your browser is not supported!
+    </video>
+  </div>
+  <div class="container-fluid">
+      <div class="col-md-12 col-sm-12 text-center headline__main">
+        <h1 class="display-2">Connect With Your Friends!</h1>
+        <p class="lead">
+          Follow people who interest you, and stay up to date on the latest news
+          and join conversations with your friends.
+        </p>
+        <div class="d-flex justify-content-center mt-5 gap-2">
+          <a href="{% url 'account_login' %}" class="btn btn-light">Log In</a>
+          <a href="{% url 'account_signup' %}" class="btn btn-info">Register</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}
