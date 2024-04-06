@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-d3o%_))w-0lijlg!ttzd+$kf!-b&iz21+4@rq=t)83j*r40+m6
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['flying-silvie-softdesign.koyeb.app', 'localhost', '127.0.0.1']
 
 
 # Application definition
